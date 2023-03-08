@@ -15,12 +15,32 @@ const message = document.querySelector(".message");
 // Play again button
 const playAgain = document.querySelector(".play-again");
 
-// console.log(playAgain);
 
-const word = ["m", "a", "g", "n", "o", "l", "i", "a"];
+const word = "magnolia";
 
-const placeHolderLetters = function (word){
-    wordsInProgress.innerText = "●";
+const placeHolder = function (word){
+    const placeHolderLetter = [];
+    for(const letter of word){
+    console.log(letter);
+    placeHolderLetter.push("●");
+}
+    wordsInProgress.innerText = placeHolderLetter.join("");
 };
+placeHolder(word);
 
-placeHolderLetters(word.join(""));
+// function guess Button------------------------------
+buttonGuess.addEventListener("click", function(e){
+    e.preventDefault();
+    const eachLetter = letters.value;
+    console.log(eachLetter);
+    letters.value = "";
+});
+// it does the same ass the button by pressing Enter
+document.addEventListener("keydown", function(e){
+    if(e.key === "Enter"){
+        e.preventDefault();
+    const eachLetter = letters.value;
+    console.log(eachLetter);
+    letters.value = "";
+}});
+
