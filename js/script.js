@@ -19,7 +19,7 @@ const playAgain = document.querySelector(".play-again");
 
 let word = "magnolia";
 
-const guessedLetters = [];
+let guessedLetters = [];
 
 let guessesRemaining = 8;
 
@@ -29,8 +29,8 @@ const getWord = async function (){
     const randomWord = wordData.split("\n");
     // const nameResults = wordData.name;
     const randomIndex = Math.floor(Math.random() * randomWord.length);
-    word = randomWord[randomIndex].trim();
-    console.log(randomWord);
+    word = randomWord[randomIndex].trim().toUpperCase();
+    // console.log(randomWord);
     placeHolder(word);
 }
 
@@ -133,6 +133,7 @@ const updateWordInProgress = function (guessedLetters) {
     win();
 }
 
+// Function to update Guesses Remaining
 
 const countGuessesRemaining = function (guess) {
     const wordUpper = word.toUpperCase();
@@ -144,6 +145,7 @@ const countGuessesRemaining = function (guess) {
     }
     if(guessesRemaining === 0){
         message.innerHTML = `<p> Game over! The correct word is ${word}`;
+        startOver();
     } else if (guessesRemaining === 1){
         numberOfGuesses.innerText = "1 guess";
     }else {
@@ -157,5 +159,34 @@ const win = function (){
     if(word.toUpperCase() === wordsInProgress.innerText){
         message.classList.add("win");
         message.innerHTML = `<p class="highlight">You guessed correct the word! Congrats!</p>`;
+
+        startOver();
     }
+    
 }   
+
+const startOver = function () {
+    buttonGuess.classList.add("hide");
+    remainingGuesses.classList.add("hide");
+    guessedLettersElement.classList.add("hide");
+    playAgain.classList.remove("hide");
+}
+
+
+playAgain.addEventListener("click", function() {
+    message.classList.remove("win");
+    message.innerHTML = "";
+    guessedLettersElement.innerText = "";
+    guessesRemaining = 8;
+    guessedLetters = [];
+    numberOfGuesses.innerText = `${guessesRemaining} guesses`;
+
+    getWord();
+
+    buttonGuess.classList.remove("hide");
+    remainingGuesses.classList.remove("hide");
+    guessedLettersElement.classList.remove("hide");
+    playAgain.classList.add("hide");
+
+
+});
